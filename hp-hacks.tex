@@ -41,15 +41,10 @@
 \newcommand{\AM}{{\scshape am}\xspace}
 \newcommand{\PM}{{\scshape pm}\xspace}
 \def\tq{{\small\raise1ex\hbox{3}\normalsize\kern-.2ex/\small\kern-.45ex\lower.1ex\hbox{4}\normalsize\spacefactor1000 }\xspace}% 
-%\newcommand{\st}{$^\mbox{st}$\xspace}
 
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 
-%\newcommand{\St}[0]{\superscript{st}\xspace}
-%\newcommand{\Nd}[0]{\superscript{nd}\xspace}
-%\newcommand{\Rd}[0]{\superscript{rd}\xspace}
-%\newcommand{\Th}[0]{\superscript{th}\xspace}
 \newcommand{\St}[0]{{st}\xspace}
 \newcommand{\Nd}[0]{{nd}\xspace}
 \newcommand{\Rd}[0]{{rd}\xspace}
@@ -128,41 +123,16 @@
 \vskip 0pt plus .5cm
 \begin{center}
 \Large
-\fontspec[ExternalLocation,Color=AA0000]{Whiteboard}
+\fontspec[ExternalLocation]{Whiteboard}
 \MakeUppercase{#1}
 \settowidth{\versewidth}{\Large \MakeUppercase{Transfiguration is not permanent!}}
 \vskip -1ex
-\addfontfeature{Color=2020FF}
+\addfontfeature{}
 \resizebox{\versewidth}{.6ex}{\rotatebox{90}{I}}
 \end{center}
 \vskip 0pt plus .5cm
 }
 
-\newcommand{\hackChDXIV}[2]{%
-%~ \vskip 0\baselineskip plus 1\baselineskip
-\noindent\hfill\scalebox{#2}{#1}\hfill\mbox{}%
-\vskip 1\baselineskip plus 1\baselineskip
-}
-
-\newlength{\Auxa}
-\newcommand{\hackChDXIVa}{
-\fontspec[ExternalLocation]{RingBearer}
-\settowidth{\versewidth}{\mbox{the}}
-Lord\scalebox{.40}{\parbox[b]{\versewidth}{
-	\centering of\\\nointerlineskip\vskip 4pt the}}Ratîonalît\raisebox{-.32ex}{Y}
-}
-
-\newcommand{\hackChDXIVb}{
-\fontspec[ExternalLocation]{NarniaBLL}
-456}
-
-\newcommand{\hackChDXIVd}{
-\fontspec[ExternalLocation]{Thundercats}
-ThunderSmarts}
-
-\newcommand{\hackChDXIVh}{
-\fontspec[ExternalLocation]{Twilight}
-Utilitarian Twilight}
 
 \newenvironment{underfull}{\hbadness=10000}{\hbadness=1000}
 
