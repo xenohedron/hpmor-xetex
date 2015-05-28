@@ -3,7 +3,24 @@
 \begin{document}
 {
 \pagestyle{empty}
-\input{hp-intro-1}
+\input{hp-titlepage}
+
+% Begin subbook title
+\cleartorecto
+\begin{center}
+\thispagestyle{empty}
+{\hp
+\huge\MakeUppercase{Book 1:}\vspace*{0.5cm}
+\Huge\MakeUppercase{Harry James Potter-Evans-Verres}\vspace*{0.5cm}
+\large\MakeUppercase{and the} %\vspace*{1cm}
+\Large\MakeUppercase{Methods of Rationality} %\vspace*{1cm}
+\includegraphics[scale=0.5]{bubble0.png} 
+\Large BY \vspace*{.25cm}
+\huge ELIEZER YUDKOWSKY%\vspace*{1cm}
+}
+\end{center}
+% End subbook title
+
 \pagenumbering{gobble}
 \input{hp-contents}
 \cleartorecto
@@ -11,26 +28,26 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-\include{new-chapters/hpmor-chapter-001}
-\include{new-chapters/hpmor-chapter-002}
-\include{new-chapters/hpmor-chapter-003}
-\include{new-chapters/hpmor-chapter-004}
-\include{new-chapters/hpmor-chapter-005} 
-\include{new-chapters/hpmor-chapter-006}
-\include{new-chapters/hpmor-chapter-007}
-\include{new-chapters/hpmor-chapter-008}
-\include{new-chapters/hpmor-chapter-009}
-\include{new-chapters/hpmor-chapter-010}
-\include{new-chapters/hpmor-chapter-012}
-\include{new-chapters/hpmor-chapter-013}
-\include{new-chapters/hpmor-chapter-014}
-\include{new-chapters/hpmor-chapter-015}
-\include{new-chapters/hpmor-chapter-016}
-\include{new-chapters/hpmor-chapter-017}
-\include{new-chapters/hpmor-chapter-018}
-\include{new-chapters/hpmor-chapter-019}
-\include{new-chapters/hpmor-chapter-020}
-\include{new-chapters/hpmor-chapter-021}
+\include{chapters/hpmor-chapter-001}
+\include{chapters/hpmor-chapter-002}
+\include{chapters/hpmor-chapter-003}
+\include{chapters/hpmor-chapter-004}
+\include{chapters/hpmor-chapter-005} 
+\include{chapters/hpmor-chapter-006}
+\include{chapters/hpmor-chapter-007}
+\include{chapters/hpmor-chapter-008}
+\include{chapters/hpmor-chapter-009}
+\include{chapters/hpmor-chapter-010}
+\include{chapters/hpmor-chapter-012}
+\include{chapters/hpmor-chapter-013}
+\include{chapters/hpmor-chapter-014}
+\include{chapters/hpmor-chapter-015}
+\include{chapters/hpmor-chapter-016}
+\include{chapters/hpmor-chapter-017}
+\include{chapters/hpmor-chapter-018}
+\include{chapters/hpmor-chapter-019}
+\include{chapters/hpmor-chapter-020}
+\include{chapters/hpmor-chapter-021}
 
 \include{hp-colophon}
 \end{document}
