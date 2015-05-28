@@ -23,7 +23,6 @@
 %
 
 \setmainfont[
-  Numbers=OldStyle
 , Style=Swash
 , Ligatures={Common,TeX}
 , Extension=.ttf
@@ -33,8 +32,9 @@
 , BoldItalicFont=*-Medium-Italic
 ]{GaramondNo8}
 
-\newfontface\hp[ExternalLocation, Ligatures={Common,TeX}]{Lumos}
+\newfontface\hp[ExternalLocation, LetterSpace=8.0]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
+\newfontface\hpchap[ExternalLocation, LetterSpace=72.0]{Lumos}
 
 \newfontface\abysmal[ExternalLocation, Ligatures={Common,TeX}]{AlegreyaSans-LightItalic}
 \newcommand\parsel[1]{{\abysmal #1}}
@@ -54,8 +54,8 @@
 %
 \makeatletter 
 \makechapterstyle{evans}{%
-	\renewcommand*{\chapnamefont}{\hp\large}
-	\renewcommand*{\chapnumfont}{\chapnamefont}
+	\renewcommand*{\chapnamefont}{\hpchap\normalsize}
+	\renewcommand*{\chapnumfont}{\chapnamefont\normalsize}
 	\renewcommand*{\chaptitlefont}{\hp\Large}
 	
 	\setlength{\beforechapskip}{4\baselineskip plus 2\baselineskip minus 2\baselineskip }
@@ -63,21 +63,20 @@
 	\setlength{\afterchapskip}{1\baselineskip}
 	
 	\renewcommand*{\printchapternum}{%
-		\chapnumfont \hyperref[contents]{\textls[30]{
+		\centering \chapnumfont $\qquad$\hyperref[contents]{CHAPTER$\qquad$ 
 \IfInteger{\thechapter}{\NUMTONAME{\thechapter}}{\thechapter}
-}}}
+}}
 	% \renewcommand*{\printchapternonum}{%
 		% \chapnumfont \hyperref[contents]{Something no num}}
 	
 	\renewcommand*{\printchaptername}{%
-		\centering \chapnamefont \hyperref[contents]{\MakeUppercase{\textls[30]{\@chapapp}}}
+%		\centering \chapnamefont \hyperref[contents]{\MakeUppercase{\@chapapp}}
 	}
 	
 	\renewcommand*{\printchaptertitle}[1]{%
-		%~ \vskip -1.5cm 
-		% \bubble\renewcommand{\bubble}{\nobubble}
-		\vskip 0pt\begin{center}\chaptitlefont \textls[50]{\MakeUppercase{##1}}\end{center}\par
-		% \vskip 1cm
+		\vskip 1cm 
+		\begin{center}\chaptitlefont \MakeUppercase{##1}\end{center}\par
+		\vskip 1cm
 	}
 	
 	\renewcommand*{\chaptermark}[1]{
