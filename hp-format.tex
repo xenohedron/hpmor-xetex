@@ -8,9 +8,9 @@
 %
 % Set-up page sizes
 %
-\setstocksize{240mm}{165mm}
+\setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{\topskip  + 34\baselineskip}{352pt}{*}
+\settypeblocksize{\topskip  + 32\baselineskip}{4.5in}{*}
 \setlrmargins{*}{*}{1}
 \setulmargins{*}{*}{1}
 \setheadfoot{\topskip +  \baselineskip}{2\baselineskip}
@@ -34,6 +34,7 @@
 ]{GaramondNo8}
 
 \newfontface\hp[ExternalLocation, Ligatures={Common,TeX}]{Lumos}
+\newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
 
 \newfontface\abysmal[ExternalLocation, Ligatures={Common,TeX}]{AlegreyaSans-LightItalic}
 \newcommand\parsel[1]{{\abysmal #1}}
@@ -55,7 +56,7 @@
 \makechapterstyle{evans}{%
 	\renewcommand*{\chapnamefont}{\hp\large}
 	\renewcommand*{\chapnumfont}{\chapnamefont}
-	\renewcommand*{\chaptitlefont}{\hp\huge}
+	\renewcommand*{\chaptitlefont}{\hp\Large}
 	
 	\setlength{\beforechapskip}{4\baselineskip plus 2\baselineskip minus 2\baselineskip }
 	\setlength{\midchapskip}{0pt}
