@@ -10,7 +10,7 @@
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{\topskip  + 32\baselineskip}{4.4in}{*}
+\settypeblocksize{\topskip  + 32\baselineskip}{4.3in}{*}
 \setlrmargins{*}{*}{1}
 \setulmargins{*}{*}{1}
 \setheadfoot{\topskip +  \baselineskip}{2\baselineskip}
@@ -32,7 +32,7 @@
 , BoldItalicFont=*-Medium-Italic
 ]{GaramondNo8}
 
-\newfontface\hp[ExternalLocation, LetterSpace=8.0]{Lumos}
+\newfontface\hp[ExternalLocation, LetterSpace=18.0]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
 \newfontface\hpchap[ExternalLocation, LetterSpace=72.0]{Lumos}
 
@@ -63,8 +63,8 @@
 	\setlength{\afterchapskip}{1\baselineskip}
 	
 	\renewcommand*{\printchapternum}{%
-		\centering \chapnumfont $\qquad$\hyperref[contents]{CHAPTER$\qquad$ 
-\IfInteger{\thechapter}{\NUMTONAME{\thechapter}}{\thechapter}
+		\centering \chapnumfont $\qquad$\hyperref[contents]{CHAPTER$\qquad$\NUMTONAME{\thechapter}
+%\IfInteger{\thechapter}{\NUMTONAME{\thechapter}}{\thechapter}
 }}
 	% \renewcommand*{\printchapternonum}{%
 		% \chapnumfont \hyperref[contents]{Something no num}}
@@ -88,7 +88,7 @@
 %                    \NUMTONAME{\thechapter}
 %                    spell: \thechapter
 %                  }{
-                    \thechapter
+                    \NUMTONAME{\thechapter}
 %                  }
                 }
         }
@@ -165,9 +165,9 @@
 %
 \usepackage{graphicx} % for \reflectbox
 \makeevenhead{headings}{\Stars}{
-	\hp\hyperref[contents]{\textls[50]{\rightmark}}}{\reflectbox{\Stars}}
+	\hp\hyperref[contents]{\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
-\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\textls[50]{\leftmark}}}{\reflectbox{\Stars}}
+\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\leftmark}}{\reflectbox{\Stars}}
 
 \copypagestyle{cleared}{empty}
 \makepsmarks{headings}{%
