@@ -23,7 +23,6 @@
 %
 
 \setmainfont[
-, Style=Swash
 , Ligatures={Common,TeX}
 , Extension=.ttf
 , UprightFont=*-Regular
@@ -58,7 +57,7 @@
 	\renewcommand*{\chapnumfont}{\chapnamefont\normalsize}
 	\renewcommand*{\chaptitlefont}{\hp\Large}
 	
-	\setlength{\beforechapskip}{4\baselineskip plus 2\baselineskip minus 2\baselineskip }
+	\setlength{\beforechapskip}{2\baselineskip plus 1\baselineskip minus 1\baselineskip }
 	\setlength{\midchapskip}{0pt}
 	\setlength{\afterchapskip}{1\baselineskip}
 	
@@ -131,7 +130,8 @@
 \renewcommand{\LettrineTextFont}{}
 
 \newcommand\lettrinemph[3][]{\lettrine[#1]{#2}{\emph{#3}}}
-\renewcommand{\DefaultLoversize}{.1}
+\setcounter{DefaultLines}{1}
+\renewcommand{\DefaultLoversize}{0}
 \renewcommand{\DefaultLraise}{0}
 
 %
@@ -223,6 +223,7 @@
 \setlength{\topsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
 \setlength{\partopsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
 
+\linespread{1.1}
 
 \usepackage[normalem]{ulem}
 
