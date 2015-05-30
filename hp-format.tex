@@ -32,9 +32,9 @@
 , BoldItalicFont=*-Medium-Italic
 ]{GaramondNo8}
 
-\newfontface\hp[ExternalLocation, LetterSpace=18.0]{Lumos}
+\newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
-\newfontface\hpchap[ExternalLocation, LetterSpace=72.0]{Lumos}
+\newfontface\hpchap[ExternalLocation, LetterSpace=96.0, WordSpace=2.5]{Lumos}
 
 \newfontface\abysmal[ExternalLocation, Ligatures={Common,TeX}]{AlegreyaSans-LightItalic}
 \newcommand\parsel[1]{{\abysmal #1}}
@@ -42,7 +42,7 @@
 %
 % Page numbering/footer
 %
-\def\pageInFooter{\Star\ \hp\makebox[4em][c]{\textls[30]{\thepage}}\Star}
+\def\pageInFooter{\Star\ \hp\makebox[4em][c]{\thepage}\Star}
 \makeevenfoot{plain}{}{\pageInFooter}{}
 \makeoddfoot{plain}{}{\pageInFooter}{}
 \makeevenfoot{headings}{}{\pageInFooter}{}
@@ -63,7 +63,7 @@
 	\setlength{\afterchapskip}{1\baselineskip}
 	
 	\renewcommand*{\printchapternum}{%
-		\centering \chapnumfont $\qquad$\hyperref[contents]{CHAPTER$\qquad$\NUMTONAME{\thechapter}
+		\begin{center} \chapnumfont \hyperref[contents]{CHAPTER \NUMTONAME{\thechapter}\end{center}
 %\IfInteger{\thechapter}{\NUMTONAME{\thechapter}}{\thechapter}
 }}
 	% \renewcommand*{\printchapternonum}{%
