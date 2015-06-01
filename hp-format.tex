@@ -130,8 +130,8 @@
 \renewcommand{\LettrineTextFont}{}
 
 \newcommand\lettrinemph[3][]{\lettrine[#1]{#2}{\emph{#3}}}
-\setcounter{DefaultLines}{1}
-\renewcommand{\DefaultLoversize}{0}
+% \setcounter{DefaultLines}{1}
+\renewcommand{\DefaultLoversize}{0.4}
 \renewcommand{\DefaultLraise}{0}
 
 %
@@ -208,14 +208,19 @@
 \newXeTeXintercharclass \dashClass
 \XeTeXcharclass `\— \dashClass % em
 \XeTeXcharclass `\– \dashClass % en
-\XeTeXcharclass `\- \dashClass % hyphen
+
+\newXeTeXintercharclass \hyphenClass
+\XeTeXcharclass `\- \hyphenClass % hyphen
 
 \XeTeXinterchartokenstate = 1
 
 \def\morhyphenpenalty{75}
 \exhyphenpenalty=10000
 
-\XeTeXinterchartoks \dashClass 0 = {\hskip 0pt\penalty \morhyphenpenalty}
+\XeTeXinterchartoks \hyphenClass 0 = {\hskip 0pt\penalty \morhyphenpenalty}
+
+\XeTeXinterchartoks \dashClass 0 = {\,}
+\XeTeXinterchartoks 0 \dashClass = {\,}
 
 %
 % Adjust space around lists
