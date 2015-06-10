@@ -10,9 +10,9 @@
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{\topskip + 35\baselineskip}{4.5in}{*}
-\setlrmargins{*}{*}{1}
-\setulmargins{*}{*}{1}
+\settypeblocksize{\topskip + 36\baselineskip}{4.6in}{*}
+\setlrmargins{*}{*}{0.8}
+\setulmargins{*}{*}{0.8}
 \setheadfoot{\topskip + \baselineskip}{2\baselineskip}
 \checkandfixthelayout[fixed]
 
@@ -23,6 +23,7 @@
 %
 
 \setmainfont[
+, Numbers=OldStyle
 , Ligatures={Common,TeX}
 , Extension=.ttf
 , UprightFont=*-Regular
@@ -41,7 +42,7 @@
 %
 % Page numbering/footer
 %
-\def\pageInFooter{\Star\ \hp\makebox[4em][c]{\thepage}\Star}
+\def\pageInFooter{{\small\Star\ \makebox[2em][c]{\thepage}\Star}}
 \makeevenfoot{plain}{}{\pageInFooter}{}
 \makeoddfoot{plain}{}{\pageInFooter}{}
 \makeevenfoot{headings}{}{\pageInFooter}{}
@@ -178,6 +179,10 @@
 %%%%%%%%%%%%%
 \setlength{\emergencystretch}{.06\textwidth}
 
+\clubpenalty=50
+\widowpenalty=100
+\brokenpenalty=10000
+
 % Allow linebreaks after em-dash and hyphens, except when they’re followed by punctuation
 
 \newXeTeXintercharclass \punctuationClass
@@ -221,6 +226,8 @@
 
 \XeTeXinterchartoks \dashClass 0 = {\,}
 \XeTeXinterchartoks 0 \dashClass = {\,}
+\XeTeXinterchartoks \dashClass 255 = {\,}
+\XeTeXinterchartoks 255 \dashClass = {\,}
 
 %
 % Adjust space around lists

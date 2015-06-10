@@ -1,6 +1,6 @@
 
 % Style definitions
-\newcommand{\el}{\ldots} % Ellipsis
+\newcommand{\el}{\mbox{\,.\,.\,.}} % Ellipsis
 
 
 \fboxrule=1pt
@@ -13,6 +13,11 @@
 	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
 	\begin{adjustwidth}{\parindent}{\parindent}%
 	\par\noindent\itshape}
+	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+	
+\newenvironment{inscription}{%\parindent=1cm%
+	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
+	\begin{adjustwidth}{4\parindent}{\parindent}\scshape}
 	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
 
 \newcommand{\shout}[1]{{\scshape #1}}
