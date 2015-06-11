@@ -1,4 +1,4 @@
-\documentclass[11pt,extrafontsizes,twoside,openright,final]{memoir}
+\documentclass[11pt,extrafontsizes,twoside,openany,final]{memoir}
 
 % THIS DOCUMENT REQUIRES XeLaTeX TO COMPILE!
 
@@ -8,9 +8,12 @@
 \usepackage[protrusion=true]{microtype}
                             % Makes right margin neater by letting certain punctuation protrude slightly
 \usepackage{fontspec}		% For the many fonts
-\usepackage{xunicode}       % No idea
-\usepackage{xstring}        % No idea
-\usepackage{eso-pic,picture}% Still no idea
+\usepackage{xunicode}       % Probably needed for something
+\usepackage{xstring}        % Needed for something
+\usepackage{xfrac}          % No idea
+\usepackage{censor}         % Used in "Time Pressure" to redact Hermione's name
+\usepackage[useregional]{datetime2}
+                            % Used for the build timestamp in the colophon
 
 \usepackage[bookmarks=true,unicode=true,pdfborder={0 0 0},
 	pdftitle={Harry Potter and the Methods of Rationality},
@@ -21,18 +24,336 @@
 \usepackage[autostyle=false, style=english]{csquotes}
 \MakeOuterQuote{"}	        % Automatic curly quotes
 
+\usepackage{ucntn}          % Provides \NUMTONAME for all caps output
+\usepackage{graphicx}       % for \reflectbox in header
+
+%
+% Set-up page sizes
+%
+\setstocksize{9in}{6in}
+\settrimmedsize{\stockheight}{\stockwidth}{*}
+\settypeblocksize{\topskip + 36\baselineskip}{4.6in}{*}
+\setlrmargins{*}{*}{0.8}
+\setulmargins{*}{*}{0.8}
+\setheadfoot{\topskip + \baselineskip}{2\baselineskip}
+\checkandfixthelayout[fixed]
+\fixdvipslayout % fix for xelatex
+
+%
+% Fonts used generally (specific fonts used only once or twice are not here).
+%
+\setmainfont[
+, Numbers=OldStyle
+, Ligatures={Common,TeX}
+, Extension=.ttf
+, UprightFont=*-Regular
+, ItalicFont=*-Italic
+, BoldFont=*-Medium
+, BoldItalicFont=*-Medium-Italic
+]{GaramondNo8}
+%
+% Chapters, headings, etc.: Lumos (extra spacing looks much better)
+\newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
+\newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
+% Chapter numbers: Lumos (extreme spacing for effect)
+\newfontface\hpchap[ExternalLocation, LetterSpace=96.0, WordSpace=2.5]{Lumos}
+% Lumos has no ligatures
+%
+% Parseltongue: Alegreya Sans Light Italic
+\newfontface\abysmal[ExternalLocation, Ligatures={Common,TeX}]{AlegreyaSans-LightItalic}
+\newcommand\parsel[1]{{\abysmal #1}}
+%
+% Draws a “magic star”, used as a decoration
+\newcommand{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
+%
+% Draws three “magic stars”, used as a decoration everywhere
+\def\Stars{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}\kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
+
+% \sbreak makes the text break with centered stars in it, used as a separator in many chapters
+\def\sbreakit{\leavevmode\unskip\unskip\unskip\unskip\unskip
+	\mbox{}\nobreak\hfill\mbox{}\allowbreak\rule{.60\textwidth}{.0pt}\par%
+	\vskip 0pt plus 1\baselineskip\noindent{%
+		\parbox[c][0pt][c]{\textwidth}{%
+			\hfil \hbox{\lower14pt\hbox{\normalsize\Stars}}%
+		}%
+	}%
+	\vskip 0pt plus 1\baselineskip%
+	\par\rule{.5\textwidth}{.0pt}\vskip1pt\noindent}
+  
+\def\sbreak{\unskip\unskip\unskip\unskip\unskip
+	\mbox{}\nobreak\hfill\mbox{}\allowbreak\rule{.60\textwidth}{.0pt}\par%
+	\vskip 0pt plus 1\baselineskip\noindent{%
+		\parbox[c][0pt][c]{\textwidth}{%
+			\hfil \hbox{\lower14pt\hbox{\normalsize\Stars}}%
+		}%
+	}%
+	\vskip 0pt plus 1\baselineskip%
+	\par\rule{.5\textwidth}{.0pt}\vskip1pt\noindent}
 
 
 
+%
+% Custom chapter style: confusing
+%
+\makechapterstyle{evans}{%
+	\renewcommand*{\chapnamefont}{\hpchap\normalsize}
+	\renewcommand*{\chapnumfont}{\chapnamefont\normalsize}
+	\renewcommand*{\chaptitlefont}{\hp\Large}
+	
+	\setlength{\beforechapskip}{0pt}
+	\setlength{\midchapskip}{0pt}
+	\setlength{\afterchapskip}{1\baselineskip}
+	
+	\renewcommand*{\printchapternum}{% " C H A P T E R   O N E "
+		\begin{center} \chapnumfont \hyperref[contents]{CHAPTER \NUMTONAME{\thechapter}\end{center}}}
 
-% Line spacing, and trading flush bottom for regular paragraph spacing
-\linespread{1.2}
+	\renewcommand*{\printchaptername}{}% Not needed, "CHAPTER" added above
+	
+	\renewcommand*{\printchaptertitle}[1]{% "A DAY OF VERY LOW PROBABILITY"
+		\vskip 1cm \begin{center}\chaptitlefont \MakeUppercase{##1}\end{center}\par \vskip 1cm}
+	
+	\renewcommand*{\chaptermark}[1]{% Don't know what this affects
+		\markboth{\MakeUppercase{##1}}{%
+		  \MakeUppercase{\chaptername}~\NUMTONAME{\thechapter}}}
+
+	\renewcommand*{\tocmark}{\markboth{}{\MakeUppercase{Contents}}}
+	
+	\renewcommand{\tocheadstart}{\chapterheadstart}
+	\renewcommand{\aftertoctitle}{\thispagestyle{empty}\afterchaptertitle}
+}
+\chapterstyle{evans}% Actually implements the above chapter style code
+
+%
+% Subsection
+%
+\setsubsecheadstyle{\scshape}
+\beforesubsecskip=1.5\baselineskip % skip before the heading
+\aftersubsecskip=.5\baselineskip plus .5\baselineskip % skip after the heading
+\setsubsechook{\nopagebreak\vskip 0pt plus 3\baselineskip}
+
+%
+% Configure line spacing and paragraph spacing, and modifying penalties
+%
+\linespread{1.15}
 \raggedbottom
+%
+\setlength{\emergencystretch}{.06\textwidth}
+%
+\clubpenalty=80
+\widowpenalty=400
+\brokenpenalty=10000
 
-\input{hp-hacks}
+%
+% Adjust space around lists
+%
+\setlength{\topsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
+\setlength{\partopsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
 
-\input{hp-format}
+%
+% Lettrine font pick
+%
+\renewcommand{\LettrineFontHook}{\hp}
+\renewcommand{\LettrineTextFont}{}
+%
+\newcommand\lettrinemph[3][]{\lettrine[#1]{#2}{\emph{#3}}}
+% \setcounter{DefaultLines}{1}
+\renewcommand{\DefaultLoversize}{0.4}
+\renewcommand{\DefaultLraise}{0}
 
+%
+% Epigraph configuration (not currently used, but still here just in case)
+%
+\setlength{\epigraphwidth}{\textwidth}
+%
+\epigraphtextposition{flushleftright}
+\epigraphfontsize{\footnotesize}
+\setlength{\epigraphrule}{0pt}
+\setlength{\beforeepigraphskip}{0pt}
+\setlength{\afterepigraphskip}{\baselineskip}
+%
+\renewcommand{\epigraph}[2]{%
+	\vspace{\beforeepigraphskip}%
+	{%
+		\epigraphsize%
+		\begin{\epigraphflush}%
+			\begin{minipage}{\epigraphwidth}%
+				\centering\emph{#1}%
+			\end{minipage}%
+		\end{\epigraphflush}%
+	}%
+	\mbox{}\sbreak%
+}
+
+%
+% Page numbering, footer, header (confusing)
+%
+\def\pageInFooter{{\small\Star\ \makebox[2em][c]{\thepage}\Star}}
+\makeevenfoot{plain}{}{\pageInFooter}{}
+\makeoddfoot{plain}{}{\pageInFooter}{}
+\makeevenfoot{headings}{}{\pageInFooter}{}
+\makeoddfoot{headings}{}{\pageInFooter}{}
+%
+\makeevenhead{headings}{\Stars}{
+	\hp\hyperref[contents]{\rightmark}}{\reflectbox{\Stars}}
+\makeatletter
+\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\leftmark}}{\reflectbox{\Stars}}
+\copypagestyle{cleared}{empty}
+\makepsmarks{headings}{%
+\createmark{chapter}{right}{shownumber}{\@chapapp\ }{. \ }}
+\makeatother
+
+%
+% XeTeX character classes (hacks)
+%
+\newXeTeXintercharclass \punctuationClass
+\XeTeXcharclass `\’ \punctuationClass
+\XeTeXcharclass `\‘ \punctuationClass
+\XeTeXcharclass `\“ \punctuationClass
+\XeTeXcharclass `\” \punctuationClass
+\XeTeXcharclass `\. \punctuationClass
+\XeTeXcharclass `\, \punctuationClass
+\XeTeXcharclass `\: \punctuationClass
+\XeTeXcharclass `\? \punctuationClass
+\XeTeXcharclass `\! \punctuationClass
+\XeTeXcharclass `\: \punctuationClass
+%
+\newXeTeXintercharclass \digitClass
+\XeTeXcharclass `\0 \digitClass
+\XeTeXcharclass `\1 \digitClass
+\XeTeXcharclass `\2 \digitClass
+\XeTeXcharclass `\3 \digitClass
+\XeTeXcharclass `\4 \digitClass
+\XeTeXcharclass `\5 \digitClass
+\XeTeXcharclass `\6 \digitClass
+\XeTeXcharclass `\7 \digitClass
+\XeTeXcharclass `\8 \digitClass
+\XeTeXcharclass `\9 \digitClass
+%
+\newXeTeXintercharclass \dashClass
+\XeTeXcharclass `\— \dashClass % em
+\XeTeXcharclass `\– \dashClass % en
+%
+\newXeTeXintercharclass \hyphenClass
+\XeTeXcharclass `\- \hyphenClass % hyphen
+%
+\XeTeXinterchartokenstate = 1 % enable functionality
+%
+\def\morhyphenpenalty{75}
+\exhyphenpenalty=10000
+% Allow linebreaks after hyphens, except when followed by punctuation
+\XeTeXinterchartoks \hyphenClass 0 = {\hskip 0pt\penalty \morhyphenpenalty}
+% Automatic spacing around em dashes
+\XeTeXinterchartoks \dashClass 0 = {\,}
+\XeTeXinterchartoks 0 \dashClass = {\,}
+\XeTeXinterchartoks \dashClass 255 = {\,}
+\XeTeXinterchartoks 255 \dashClass = {\,}
+
+%
+% Style definitions and hacks
+%
+
+% In the text, em dashes are encoded explicitly
+% and the ellipsis is encoded with {\el}
+\newcommand{\el}{\textellipsis} % Ellipsis definition
+%
+% Logical formatting macros
+\newcommand{\shout}[1]{{\scshape #1}} % Shout means small caps
+\newcommand{\scream}[1]{\MakeUppercase{#1}} % Scream means all caps
+\newcommand{\abbrev}[1]{{\scshape \MakeLowercase{#1}}} % All small caps
+\newcommand{\prophecy}[1]{\textit{\shout{#1}}} % Prophecies are set in italic small caps
+%
+\newcommand{\headline}[1]{\begin{center}\scshape #1\end{center}} % Newspaper headlines, centered
+\newcommand{\inlineheadline}[1]{{\scshape #1}} % Newspaper headlines inline with text
+%
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}} % Not sure if used
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}} %   Not sure if used
+%
+\newcommand{\accronym}[1]{#1} % Obsolete, defined to do nothing
+\newcommand{\emcap}[1]{#1} % Also obsolete, defined to do nothing
+%
+% Macros to format certain words and abbreviations automatically
+\newcommand{\AM}{{\scshape am}\xspace} % AM in small caps, for time of day
+\newcommand{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
+\newcommand{\St}[0]{{st}\xspace} % May or may not be used, not sure
+\newcommand{\Nd}[0]{{nd}\xspace} % May or may not be used, not sure
+\newcommand{\Rd}[0]{{rd}\xspace} % May or may not be used, not sure
+\newcommand{\Th}[0]{{th}\xspace} % May or may not be used, not sure
+\newcommand{\SPHEW}{{\abbrev{SPHEW}}\xspace} % All small caps SPHEW
+%
+% No idea what the following command is for
+\def\tq{{\small\raise1ex\hbox{3}\normalsize\kern-.2ex/\small\kern-.45ex\lower.1ex\hbox{4}\normalsize\spacefactor1000 }\xspace}% 
+%
+% Makes the written notes in italics (first used, Hogwarts acceptance letter)
+\newenvironment{writtenNote}{%\parindent=1cm%
+	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
+	\begin{adjustwidth}{\parindent}{\parindent}%
+	\par\noindent\itshape}
+	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+% Makes the letter address and closing
+\newcommand{\letterAddress}[1]{\pagebreak[1]\noindent{}#1\nopagebreak[4]\par}
+\newcommand{\letterClosing}[2][\vskip 1\baselineskip]{\nopagebreak[4]#1\par\nopagebreak[5]\noindent#2}
+%
+% Makes the inscriptions in small caps (first used, Gringotts)
+\newenvironment{inscription}{%\parindent=1cm%
+	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
+	\begin{adjustwidth}{4\parindent}{\parindent}\scshape}
+	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+%
+% Wrapper for headlines, currently defined to do nothing
+\newenvironment{headlines}{}{}
+%
+% Not sure what these are included for:
+\fboxrule=1pt
+\fboxsep=-1pt
+%
+% Whiteboard in chapter 15
+\newcommand{\hackChXV}[1]{
+\vskip 0pt plus .5cm
+\begin{center}
+\Large
+\fontspec[ExternalLocation]{Whiteboard}
+\MakeUppercase{#1}
+\settowidth{\versewidth}{\Large \MakeUppercase{Transfiguration is not permanent!}}
+\vskip -1ex
+\addfontfeature{}
+\resizebox{\versewidth}{.6ex}{\rotatebox{90}{I}}
+\end{center}
+\vskip 0pt plus .5cm
+}
+
+%
+% SPECIAL CHAPTER TITLES
+% \partschapter{The Stanford Prison Experiment}{TSPE}{XIII}{Aftermaths}
+% TOC: TSPE part XIII: Aftermaths
+% Page header: The Stanford Prison Experiment XIII: \\? Aftermaths
+% Title: The Stanford Prison Experiment, Part XIII: \\? Aftermaths
+\newcommand{\namedpartchapter}[4]{%
+	\chapter[%
+			\texorpdfstring{%
+				\abbrev{#2, part #3}: #4}{%
+				#2, part #3: #4}][%
+			\mbox{#1 #3:} \mbox{#4}]{%
+			#1, Part~#3:\protect\linebreak[1] #4}%
+}
+
+\newcommand{\partchapter}[2]{%
+	\chapter[\texorpdfstring{#1, \abbrev{part #2}}{#1, part #2}]%
+		[#1 #2]{#1, Part~#2}}
+		
+\newcommand{\partschapter}[2]{\chapter[#1, \texorpdfstring{\abbrev{parts #2}}{parts #2}][#1 #2]{#1, Parts~#2}}
+
+%
+% Original maintainer wrote:
+%     In cases where the original text didn’t line-break nicely, I did (minimal) rewordings. This
+%     macro was used to mark them. The first argument is the original text (ignored), and the
+%     second holds the replacement.
+%
+\newcommand{\replacement}[2]{#2}
+\newcommand{\splitment}[3]{\discretionary{#1}{#2}{#3}}
+
+%
+% Hyphenation corrections
+%
 \hyphenation{Her-mi-o-ne Gran-ger bru-shes Gryf-fin-dor Le-strange 
 some-where which-ev-er Hog-warts re-pli-cat-ed ran-dom sta-tis-ti-cal 
 Wi-zen-gam-ot an-aly-se an-aly-sis remem-ber McGon-a-gall fun-da-men-tal}
