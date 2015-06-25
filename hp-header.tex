@@ -43,7 +43,6 @@
 % Fonts used generally (specific fonts used only once or twice are not here).
 %
 \setmainfont[
-, Numbers=OldStyle
 , Ligatures={Common,TeX}
 , Extension=.ttf
 , UprightFont=*-Regular
@@ -187,7 +186,7 @@
 %
 % Page numbering, footer, header (confusing)
 %
-\def\pageInFooter{{\small\Star\ \makebox[2em][c]{\thepage}\Star}}
+\def\pageInFooter{{\small\Star\ \makebox[2em][c]{\thepage\,}\Star}}
 \makeevenfoot{plain}{}{\pageInFooter}{}
 \makeoddfoot{plain}{}{\pageInFooter}{}
 \makeevenfoot{headings}{}{\pageInFooter}{}
