@@ -55,7 +55,7 @@
 \newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
 % Chapter numbers: Lumos (extreme spacing for effect)
-\newfontface\hpchap[ExternalLocation, LetterSpace=96.0, WordSpace=2.5]{Lumos}
+\newfontface\hpchap[ExternalLocation, LetterSpace=72.0, WordSpace=2.0]{Lumos}
 % Lumos has no ligatures
 %
 % Parseltongue: Alegreya Sans Light Italic
@@ -322,24 +322,22 @@
 
 %
 % SPECIAL CHAPTER TITLES
-% \partschapter{The Stanford Prison Experiment}{TSPE}{XIII}{Aftermaths}
+% \namedpartchapter{The Stanford Prison Experiment}{TSPE}{XIII}{Aftermaths}
 % TOC: TSPE part XIII: Aftermaths
 % Page header: The Stanford Prison Experiment XIII: \\? Aftermaths
 % Title: The Stanford Prison Experiment, Part XIII: \\? Aftermaths
 \newcommand{\namedpartchapter}[4]{%
 	\chapter[%
 			\texorpdfstring{%
-				\abbrev{#2, part #3}: #4}{%
+				#2, \abbrev{part #3}: #4}{%
 				#2, part #3: #4}][%
-			\mbox{#1 #3:} \mbox{#4}]{%
+			#1\protect\nolinebreak[1] #3: #4]{%
 			#1, Part~#3:\protect\linebreak[1] #4}%
 }
 
 \newcommand{\partchapter}[2]{%
 	\chapter[\texorpdfstring{#1, \abbrev{part #2}}{#1, part #2}]%
 		[#1 #2]{#1, Part~#2}}
-		
-\newcommand{\partschapter}[2]{\chapter[#1, \texorpdfstring{\abbrev{parts #2}}{parts #2}][#1 #2]{#1, Parts~#2}}
 
 %
 % Original maintainer wrote:
