@@ -39,7 +39,7 @@
 \fixdvipslayout % fix for xelatex
 
 %
-% Fonts used generally (specific fonts used only once or twice are not here).
+% Font setup: URW Garamond No. 8
 %
 \setmainfont[
 , Ligatures={Common,TeX}
@@ -48,7 +48,6 @@
 , BoldFont=*-Medium
 , BoldItalicFont=*-Medium-Italic
 ]{GaramondNo8}
-%
 %
 % Chapters, headings, etc.: Lumos (extra spacing looks much better)
 \newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
@@ -66,8 +65,8 @@
 %
 % Section break with stars
 %
-\newcommand{\sbreak}{\par\vskip .5\baselineskip minus .5\baselineskip%
-    {\begin{center}\Stars \end{center}}\vskip .5\baselineskip minus .5\baselineskip \par\noindent}
+\newcommand{\sbreak}{\par\vskip 0pt plus .5\baselineskip%
+    {\begin{center} \Star\qquad\Star\qquad\Star \end{center}}\vskip 0pt plus .5\baselineskip \par\noindent}
 
 %
 % Custom chapter style: confusing
@@ -111,23 +110,23 @@
 %
 % Configure line spacing and paragraph spacing, and modifying penalties
 %
-\linespread{1.15}
+\linespread{1.16}
 \raggedbottom
 %
-\setlength{\emergencystretch}{.06\textwidth}
+\setlength{\emergencystretch}{.07\textwidth}
 %
 \clubpenalty=80
 \widowpenalty=400
 \brokenpenalty=10000
 
 %
-% Adjust space around lists
+% Adjust space around lists (not entirely sure why)
 %
 \setlength{\topsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
 \setlength{\partopsep}{.5\baselineskip plus 1\baselineskip minus .5\baselineskip}
 
 %
-% Lettrine font pick
+% Lettrine font pick and configuration
 %
 \renewcommand{\LettrineFontHook}{\hp}
 \renewcommand{\LettrineTextFont}{}
@@ -147,9 +146,9 @@
 \makeoddfoot{headings}{}{\pageInFooter}{}
 %
 \makeevenhead{headings}{\Stars}{
-	\hp\hyperref[contents]{\scriptsize\rightmark}}{\reflectbox{\Stars}}
+	\hp\hyperref[contents]{\footnotesize\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
-\makeoddhead{headings}{\Stars}{\parbox{99mm}{\centering\hp\scriptsize\leftmark}}{\reflectbox{\Stars}}
+\makeoddhead{headings}{\Stars}{\parbox{99mm}{\centering\hp\footnotesize\leftmark}}{\reflectbox{\Stars}}
 \copypagestyle{cleared}{empty}
 \makepsmarks{headings}{%
 \createmark{chapter}{right}{shownumber}{\@chapapp\ }{. \ }}
@@ -204,18 +203,14 @@
 %
 % Style definitions and hacks
 %
-
 % In the text, em dashes are encoded explicitly
 % and the ellipsis is encoded with {\el}
 \newcommand*{\el}{\textellipsis} % Ellipsis definition
 %
 % Logical formatting macros
 \newcommand*{\parsel}[1]{\textit{#1}} % Parseltongue
-\newcommand*{\shout}[1]{{\scshape #1}} % Shout means small caps
-\newcommand*{\scream}[1]{\MakeUppercase{#1}} % Scream means all caps
-\newcommand*{\abbrev}[1]{{\scshape \MakeLowercase{#1}}} % All small caps
-\newcommand*{\prophecy}[1]{\textbf{\textit{\textsc{#1}}}} % Prophecies are set in italic small caps
-\newcommand*{\headline}[1]{\textsc{#1}} % Newspaper headlines
+\newcommand*{\prophecy}[1]{\textbf{\textit{\textsc{#1}}}} % Prophecies
+\newcommand*{\headline}[1]{\begin{center}\textsc{#1}\end{center}} % Newspaper headlines
 \newcommand*{\inlineheadline}[1]{\textsc{#1}} % Newspaper headlines inline with text
 %
 % Macros to format certain words and abbreviations automatically
@@ -223,17 +218,17 @@
 \newcommand*{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
 \newcommand*{\SPHEW}{{\scshape sphew}\xspace} % All small caps SPHEW
 %
-% Makes the written notes in italics (first used, Hogwarts acceptance letter)
+% Makes a written note in italics (first used, Hogwarts acceptance letter)
 \newenvironment{writtenNote}{%\parindent=1cm%
 	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
 	\begin{adjustwidth}{\parindent}{\parindent}%
 	\par\noindent\itshape}
 	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
-% Makes the letter address and closing
+% Makes a letter address and closing, for use with above writtenNote environment
 \newcommand{\letterAddress}[1]{\pagebreak[1]\noindent{}#1\nopagebreak[4]\par}
 \newcommand{\letterClosing}[2][\vskip 1\baselineskip]{\nopagebreak[4]#1\par\nopagebreak[5]\noindent#2}
 %
-% Makes the inscriptions in small caps (first used, Gringotts)
+% Makes an inscription in small caps (first used, Gringotts)
 \newenvironment{inscription}{%\parindent=1cm%
 	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
 	\begin{adjustwidth}{4\parindent}{\parindent}\scshape}
@@ -243,17 +238,11 @@
 \fboxrule=1pt
 \fboxsep=-1pt
 %
-% Whiteboard in chapter 15
+% Whiteboard in chapter 15 "Transfiguration is not permanent!"
 \newcommand{\hackChXV}[1]{
 \vskip 0pt plus .5cm
 \begin{center}
-\Large
-\fontspec[ExternalLocation]{Whiteboard}
-\MakeUppercase{#1}
-\settowidth{\versewidth}{\Large \MakeUppercase{Transfiguration is not permanent!}}
-\vskip -1ex
-\addfontfeature{}
-\resizebox{\versewidth}{.6ex}{\rotatebox{90}{I}}
+\underline{\textbf{\MakeUppercase{#1}}}
 \end{center}
 \vskip 0pt plus .5cm
 }
