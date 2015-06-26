@@ -66,30 +66,11 @@
 \newcommand{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
 %
 % Draws three “magic stars”, used as a decoration everywhere
-\def\Stars{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}\kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
+\newcommand{\Stars}{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}%
+    \kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
 
-% \sbreak makes the text break with centered stars in it, used as a separator in many chapters
-\def\sbreakit{\leavevmode\unskip\unskip\unskip\unskip\unskip
-	\mbox{}\nobreak\hfill\mbox{}\allowbreak\rule{.60\textwidth}{.0pt}\par%
-	\vskip 0pt plus 1\baselineskip\noindent{%
-		\parbox[c][0pt][c]{\textwidth}{%
-			\hfil \hbox{\lower14pt\hbox{\normalsize\Stars}}%
-		}%
-	}%
-	\vskip 0pt plus 1\baselineskip%
-	\par\rule{.5\textwidth}{.0pt}\vskip1pt\noindent}
-  
-\def\sbreak{\unskip\unskip\unskip\unskip\unskip
-	\mbox{}\nobreak\hfill\mbox{}\allowbreak\rule{.60\textwidth}{.0pt}\par%
-	\vskip 0pt plus 1\baselineskip\noindent{%
-		\parbox[c][0pt][c]{\textwidth}{%
-			\hfil \hbox{\lower14pt\hbox{\normalsize\Stars}}%
-		}%
-	}%
-	\vskip 0pt plus 1\baselineskip%
-	\par\rule{.5\textwidth}{.0pt}\vskip1pt\noindent}
-
-
+\newcommand{\sbreak}{\par\vskip 1\baselineskip minus 1\baselineskip%
+    {\begin{center}\Stars \end{center}}\vskip 1\baselineskip minus 1\baselineskip \par\noindent}
 
 %
 % Custom chapter style: confusing
@@ -155,47 +136,23 @@
 \renewcommand{\LettrineTextFont}{}
 %
 \newcommand\lettrinemph[3][]{\lettrine[#1]{#2}{\emph{#3}}}
-% \setcounter{DefaultLines}{1}
-\renewcommand{\DefaultLoversize}{0.4}
+\setcounter{DefaultLines}{1}
+\renewcommand{\DefaultLoversize}{0}
 \renewcommand{\DefaultLraise}{0}
-
-%
-% Epigraph configuration (not currently used, but still here just in case)
-%
-\setlength{\epigraphwidth}{\textwidth}
-%
-\epigraphtextposition{flushleftright}
-\epigraphfontsize{\footnotesize}
-\setlength{\epigraphrule}{0pt}
-\setlength{\beforeepigraphskip}{0pt}
-\setlength{\afterepigraphskip}{\baselineskip}
-%
-\renewcommand{\epigraph}[2]{%
-	\vspace{\beforeepigraphskip}%
-	{%
-		\epigraphsize%
-		\begin{\epigraphflush}%
-			\begin{minipage}{\epigraphwidth}%
-				\centering\emph{#1}%
-			\end{minipage}%
-		\end{\epigraphflush}%
-	}%
-	\mbox{}\sbreak%
-}
 
 %
 % Page numbering, footer, header (confusing)
 %
-\def\pageInFooter{{\small\Star\ \makebox[2em][c]{\thepage\,}\Star}}
+\newcommand{\pageInFooter}{{\small\Star\ \makebox[2em][c]{\thepage\,}\Star}}
 \makeevenfoot{plain}{}{\pageInFooter}{}
 \makeoddfoot{plain}{}{\pageInFooter}{}
 \makeevenfoot{headings}{}{\pageInFooter}{}
 \makeoddfoot{headings}{}{\pageInFooter}{}
 %
 \makeevenhead{headings}{\Stars}{
-	\hp\hyperref[contents]{\rightmark}}{\reflectbox{\Stars}}
+	\hp\hyperref[contents]{\small\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
-\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\leftmark}}{\reflectbox{\Stars}}
+\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\small\leftmark}}{\reflectbox{\Stars}}
 \copypagestyle{cleared}{empty}
 \makepsmarks{headings}{%
 \createmark{chapter}{right}{shownumber}{\@chapapp\ }{. \ }}
@@ -264,23 +221,10 @@
 \newcommand{\headline}[1]{\begin{center}\scshape #1\end{center}} % Newspaper headlines, centered
 \newcommand{\inlineheadline}[1]{{\scshape #1}} % Newspaper headlines inline with text
 %
-\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}} % Not sure if used
-\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}} %   Not sure if used
-%
-\newcommand{\accronym}[1]{#1} % Obsolete, defined to do nothing
-\newcommand{\emcap}[1]{#1} % Also obsolete, defined to do nothing
-%
 % Macros to format certain words and abbreviations automatically
 \newcommand{\AM}{{\scshape am}\xspace} % AM in small caps, for time of day
 \newcommand{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
-\newcommand{\St}[0]{{st}\xspace} % May or may not be used, not sure
-\newcommand{\Nd}[0]{{nd}\xspace} % May or may not be used, not sure
-\newcommand{\Rd}[0]{{rd}\xspace} % May or may not be used, not sure
-\newcommand{\Th}[0]{{th}\xspace} % May or may not be used, not sure
 \newcommand{\SPHEW}{{\abbrev{SPHEW}}\xspace} % All small caps SPHEW
-%
-% No idea what the following command is for
-\def\tq{{\small\raise1ex\hbox{3}\normalsize\kern-.2ex/\small\kern-.45ex\lower.1ex\hbox{4}\normalsize\spacefactor1000 }\xspace}% 
 %
 % Makes the written notes in italics (first used, Hogwarts acceptance letter)
 \newenvironment{writtenNote}{%\parindent=1cm%
@@ -297,9 +241,6 @@
 	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
 	\begin{adjustwidth}{4\parindent}{\parindent}\scshape}
 	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
-%
-% Wrapper for headlines, currently defined to do nothing
-\newenvironment{headlines}{}{}
 %
 % Not sure what these are included for:
 \fboxrule=1pt
@@ -319,35 +260,7 @@
 \end{center}
 \vskip 0pt plus .5cm
 }
-
 %
-% SPECIAL CHAPTER TITLES
-% \namedpartchapter{The Stanford Prison Experiment}{TSPE}{XIII}{Aftermaths}
-% TOC: TSPE part XIII: Aftermaths
-% Page header: The Stanford Prison Experiment XIII: \\? Aftermaths
-% Title: The Stanford Prison Experiment, Part XIII: \\? Aftermaths
-\newcommand{\namedpartchapter}[4]{%
-	\chapter[%
-			\texorpdfstring{%
-				#2, \abbrev{part #3}: #4}{%
-				#2, part #3: #4}][%
-			#1\protect\nolinebreak[1] #3: #4]{%
-			#1, Part~#3:\protect\linebreak[1] #4}%
-}
-
-\newcommand{\partchapter}[2]{%
-	\chapter[\texorpdfstring{#1, \abbrev{part #2}}{#1, part #2}]%
-		[#1 #2]{#1, Part~#2}}
-
-%
-% Original maintainer wrote:
-%     In cases where the original text didn’t line-break nicely, I did (minimal) rewordings. This
-%     macro was used to mark them. The first argument is the original text (ignored), and the
-%     second holds the replacement.
-%
-\newcommand{\replacement}[2]{#2}
-\newcommand{\splitment}[3]{\discretionary{#1}{#2}{#3}}
-
 %
 % Hyphenation corrections
 %
