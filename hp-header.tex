@@ -10,7 +10,6 @@
 \usepackage{fontspec}		% For the many fonts
 \usepackage{xunicode}       % Probably needed for something
 \usepackage{xstring}        % Needed for something
-\usepackage{xfrac}          % No idea
 \usepackage{censor}         % Used in "Time Pressure" to redact Hermione's name
 \usepackage[useregional]{datetime2}
                             % Used for the build timestamp in the colophon
@@ -32,7 +31,7 @@
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{\topskip + 36\baselineskip}{4.6in}{*}
+\settypeblocksize{\topskip + 36\baselineskip}{4.7in}{*}
 \setlrmargins{*}{*}{0.8}
 \setulmargins{*}{*}{0.8}
 \setheadfoot{\topskip + \baselineskip}{2\baselineskip}
@@ -44,33 +43,31 @@
 %
 \setmainfont[
 , Ligatures={Common,TeX}
-, Extension=.ttf
 , UprightFont=*-Regular
 , ItalicFont=*-Italic
 , BoldFont=*-Medium
 , BoldItalicFont=*-Medium-Italic
 ]{GaramondNo8}
 %
+%
 % Chapters, headings, etc.: Lumos (extra spacing looks much better)
 \newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
 % Chapter numbers: Lumos (extreme spacing for effect)
 \newfontface\hpchap[ExternalLocation, LetterSpace=72.0, WordSpace=2.0]{Lumos}
-% Lumos has no ligatures
-%
-% Parseltongue: Alegreya Sans Light Italic
-\newfontface\abysmal[ExternalLocation, Ligatures={Common,TeX}]{AlegreyaSans-LightItalic}
-\newcommand\parsel[1]{{\abysmal #1}}
 %
 % Draws a “magic star”, used as a decoration
-\newcommand{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
+\newcommand*{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
 %
 % Draws three “magic stars”, used as a decoration everywhere
-\newcommand{\Stars}{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}%
+\newcommand*{\Stars}{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}%
     \kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
 
-\newcommand{\sbreak}{\par\vskip 1\baselineskip minus 1\baselineskip%
-    {\begin{center}\Stars \end{center}}\vskip 1\baselineskip minus 1\baselineskip \par\noindent}
+%
+% Section break with stars
+%
+\newcommand{\sbreak}{\par\vskip .5\baselineskip minus .5\baselineskip%
+    {\begin{center}\Stars \end{center}}\vskip .5\baselineskip minus .5\baselineskip \par\noindent}
 
 %
 % Custom chapter style: confusing
@@ -135,7 +132,7 @@
 \renewcommand{\LettrineFontHook}{\hp}
 \renewcommand{\LettrineTextFont}{}
 %
-\newcommand\lettrinemph[3][]{\lettrine[#1]{#2}{\emph{#3}}}
+\newcommand{\lettrinemph}[3][]{\lettrine[#1]{#2}{\emph{#3}}}
 \setcounter{DefaultLines}{1}
 \renewcommand{\DefaultLoversize}{0}
 \renewcommand{\DefaultLraise}{0}
@@ -150,9 +147,9 @@
 \makeoddfoot{headings}{}{\pageInFooter}{}
 %
 \makeevenhead{headings}{\Stars}{
-	\hp\hyperref[contents]{\small\rightmark}}{\reflectbox{\Stars}}
+	\hp\hyperref[contents]{\scriptsize\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
-\makeoddhead{headings}{\Stars}{\parbox{97mm}{\centering\hp\small\leftmark}}{\reflectbox{\Stars}}
+\makeoddhead{headings}{\Stars}{\parbox{99mm}{\centering\hp\scriptsize\leftmark}}{\reflectbox{\Stars}}
 \copypagestyle{cleared}{empty}
 \makepsmarks{headings}{%
 \createmark{chapter}{right}{shownumber}{\@chapapp\ }{. \ }}
@@ -210,21 +207,21 @@
 
 % In the text, em dashes are encoded explicitly
 % and the ellipsis is encoded with {\el}
-\newcommand{\el}{\textellipsis} % Ellipsis definition
+\newcommand*{\el}{\textellipsis} % Ellipsis definition
 %
 % Logical formatting macros
-\newcommand{\shout}[1]{{\scshape #1}} % Shout means small caps
-\newcommand{\scream}[1]{\MakeUppercase{#1}} % Scream means all caps
-\newcommand{\abbrev}[1]{{\scshape \MakeLowercase{#1}}} % All small caps
-\newcommand{\prophecy}[1]{\textit{\shout{#1}}} % Prophecies are set in italic small caps
-%
-\newcommand{\headline}[1]{\begin{center}\scshape #1\end{center}} % Newspaper headlines, centered
-\newcommand{\inlineheadline}[1]{{\scshape #1}} % Newspaper headlines inline with text
+\newcommand*{\parsel}[1]{\textit{#1}} % Parseltongue
+\newcommand*{\shout}[1]{{\scshape #1}} % Shout means small caps
+\newcommand*{\scream}[1]{\MakeUppercase{#1}} % Scream means all caps
+\newcommand*{\abbrev}[1]{{\scshape \MakeLowercase{#1}}} % All small caps
+\newcommand*{\prophecy}[1]{\textbf{\textit{\textsc{#1}}}} % Prophecies are set in italic small caps
+\newcommand*{\headline}[1]{\textsc{#1}} % Newspaper headlines
+\newcommand*{\inlineheadline}[1]{\textsc{#1}} % Newspaper headlines inline with text
 %
 % Macros to format certain words and abbreviations automatically
-\newcommand{\AM}{{\scshape am}\xspace} % AM in small caps, for time of day
-\newcommand{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
-\newcommand{\SPHEW}{{\abbrev{SPHEW}}\xspace} % All small caps SPHEW
+\newcommand*{\AM}{{\scshape am}\xspace} % AM in small caps, for time of day
+\newcommand*{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
+\newcommand*{\SPHEW}{{\scshape sphew}\xspace} % All small caps SPHEW
 %
 % Makes the written notes in italics (first used, Hogwarts acceptance letter)
 \newenvironment{writtenNote}{%\parindent=1cm%
