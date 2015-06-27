@@ -53,7 +53,7 @@
 \newfontface\hp[ExternalLocation, LetterSpace=18.0, WordSpace=1.5]{Lumos}
 \newcommand{\lumos}[1]{{\hp\MakeUppercase{#1}}}
 % Chapter numbers: Lumos (extreme spacing for effect)
-\newfontface\hpchap[ExternalLocation, LetterSpace=72.0, WordSpace=2.0]{Lumos}
+\newfontface\hpchap[ExternalLocation, LetterSpace=80.0, WordSpace=2.0]{Lumos}
 %
 % Draws a “magic star”, used as a decoration
 \newcommand*{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
@@ -74,7 +74,7 @@
 \makechapterstyle{evans}{%
 	\renewcommand*{\chapnamefont}{\hpchap\normalsize}
 	\renewcommand*{\chapnumfont}{\chapnamefont\normalsize}
-	\renewcommand*{\chaptitlefont}{\hp\Large}
+	\renewcommand*{\chaptitlefont}{\hp\large}
 	
 	\setlength{\beforechapskip}{0pt}
 	\setlength{\midchapskip}{0pt}
@@ -98,6 +98,14 @@
 	\renewcommand{\aftertoctitle}{\thispagestyle{empty}\afterchaptertitle}
 }
 \chapterstyle{evans}% Actually implements the above chapter style code
+
+\newcommand*{\hpmorchapbreak}{\linebreak} % Allows the break to be disabled in TOC
+\newcommand{\wrapchapter}[2]{\chapter[% Custom linebreak for long chapter titles
+        \texorpdfstring{%
+        #1\protect\hpmorchapbreak #2}{% Header
+        #1 #2}]{% Bookmark for PDF
+        #1\protect\hpmorchapbreak #2}}% First page of chapter
+
 
 %
 % Subsection
@@ -146,9 +154,9 @@
 \makeoddfoot{headings}{}{\pageInFooter}{}
 %
 \makeevenhead{headings}{\Stars}{
-	\hp\hyperref[contents]{\footnotesize\rightmark}}{\reflectbox{\Stars}}
+	\hp\hyperref[contents]{\small\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
-\makeoddhead{headings}{\Stars}{\parbox{99mm}{\centering\hp\footnotesize\leftmark}}{\reflectbox{\Stars}}
+\makeoddhead{headings}{\Stars}{\parbox{99mm}{\centering\hp\small\leftmark}}{\reflectbox{\Stars}}
 \copypagestyle{cleared}{empty}
 \makepsmarks{headings}{%
 \createmark{chapter}{right}{shownumber}{\@chapapp\ }{. \ }}
