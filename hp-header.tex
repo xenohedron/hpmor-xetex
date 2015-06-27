@@ -5,7 +5,7 @@
 \usepackage{lettrine}		% Used for the fancy caps at the start of each chapter
 \usepackage{xspace}		    % Takes care of spaces after macros
 \usepackage{amsmath}		% Provides the align environment, used in chapter 13 for the notes
-\usepackage[protrusion=true]{microtype}
+\usepackage[protrusion=basictext]{microtype}
                             % Makes right margin neater by letting certain punctuation protrude slightly
 \usepackage{fontspec}		% For the many fonts
 \usepackage{xunicode}       % Probably needed for something
@@ -127,8 +127,9 @@
 \setlength{\emergencystretch}{.07\textwidth}
 %
 \clubpenalty=80
-\widowpenalty=400
+\widowpenalty=4000
 \brokenpenalty=10000
+\hbadness=2500
 
 %
 % Adjust space around lists (not entirely sure why)
