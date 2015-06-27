@@ -55,8 +55,11 @@
 % Chapter numbers: Lumos (extreme spacing for effect)
 \newfontface\hpchap[ExternalLocation, LetterSpace=80.0, WordSpace=2.0]{Lumos}
 %
+% Font used to draw the magic star
+\newfontface\starfont[ExternalLocation]{Miscelanea.ttf}
+%
 % Draws a “magic star”, used as a decoration
-\newcommand*{\Star}{{\fontspec[ExternalLocation]{Miscelanea.ttf}*}}
+\newcommand*{\Star}{{\starfont{}*}}
 %
 % Draws three “magic stars”, used as a decoration everywhere
 \newcommand*{\Stars}{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}%
