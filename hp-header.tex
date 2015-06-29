@@ -27,7 +27,7 @@
 \usepackage{graphicx}       % for \reflectbox in header
 
 %
-% Set-up page sizes
+% Set-up page sizes and margins
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
@@ -66,7 +66,7 @@
     \kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
 
 %
-% Section break with stars
+% Section break with three spaced stars
 %
 \newcommand{\sbreak}{\par\vskip 0pt plus .5\baselineskip%
     {\begin{center} \Star\qquad\Star\qquad\Star \end{center}}\vskip 0pt plus .5\baselineskip \par\noindent}
@@ -113,7 +113,7 @@
 %
 % Subsection
 %
-\setsubsecheadstyle{\scshape}
+\setsubsecheadstyle{\bfshape\scshape} % Subsection titles in small caps
 \beforesubsecskip=1.5\baselineskip % skip before the heading
 \aftersubsecskip=.5\baselineskip plus .5\baselineskip % skip after the heading
 \setsubsechook{\nopagebreak\vskip 0pt plus 3\baselineskip}
@@ -121,15 +121,18 @@
 %
 % Configure line spacing and paragraph spacing, and modifying penalties
 %
-\linespread{1.16}
-\raggedbottom
+\linespread{1.16} % Wider line spacing looks much better
+\raggedbottom     % Better to have consistent line spacing than vertically justified text
+\frenchspacing    % Single space after a period
 %
 \setlength{\emergencystretch}{.07\textwidth}
+% If a paragraph cannot be typeset without compromises, try wider line spacing
 %
-\clubpenalty=80
-\widowpenalty=4000
-\brokenpenalty=10000
-\hbadness=2500
+\clubpenalty=80 % Last line of page new paragraph = not much of an issue
+\widowpenalty=4000 % Avoids last line of paragraph on next page
+\brokenpenalty=7000 % Avoids hyphenation across a page break
+\doublehyphendemerits=90000 % Avoids hyphenation on consecutive lines
+\hbadness=2000 % When compiling, only reports underfull lines if badness>2000
 
 %
 % Adjust space around lists (not entirely sure why)
@@ -140,23 +143,29 @@
 %
 % Lettrine font pick and configuration
 %
-\renewcommand{\LettrineFontHook}{\hp}
-\renewcommand{\LettrineTextFont}{}
-%
+\renewcommand{\LettrineFontHook}{\hp} % Uses Lumos for the large letter
+\renewcommand{\LettrineTextFont}{} % Normal font for the rest of the first word
+% For when the first word is in italics, use this command instead
 \newcommand{\lettrinemph}[3][]{\lettrine[#1]{#2}{\emph{#3}}}
 \setcounter{DefaultLines}{1}
+% Large cap instead of drop cap because of many short first lines
 \renewcommand{\DefaultLoversize}{0}
 \renewcommand{\DefaultLraise}{0}
 
 %
 % Page numbering, footer, header (confusing)
 %
-\newcommand{\pageInFooter}{{\small\Star\ \makebox[2em][c]{\thepage\,}\Star}}
+\newcommand{\pageInFooter}{{\footnotesize\Star\ \makebox[2em][c]{\thepage\,}\Star}}
+% Page number centered between two small stars in footer
+% Same on all pages in body text
 \makeevenfoot{plain}{}{\pageInFooter}{}
 \makeoddfoot{plain}{}{\pageInFooter}{}
 \makeevenfoot{headings}{}{\pageInFooter}{}
 \makeoddfoot{headings}{}{\pageInFooter}{}
 %
+% Left side header: chapter number
+% Right side header: chapter name
+% Decorative stars in corners
 \makeevenhead{headings}{\Stars}{
 	\hp\hyperref[contents]{\small\rightmark}}{\reflectbox{\Stars}}
 \makeatletter
@@ -202,15 +211,11 @@
 %
 \XeTeXinterchartokenstate = 1 % enable functionality
 %
-\def\morhyphenpenalty{75}
-\exhyphenpenalty=10000
-% Allow linebreaks after hyphens, except when followed by punctuation
-\XeTeXinterchartoks \hyphenClass 0 = {\hskip 0pt\penalty \morhyphenpenalty}
 % Automatic spacing around em dashes
-\XeTeXinterchartoks \dashClass 0 = {\,}
-\XeTeXinterchartoks 0 \dashClass = {\,}
-\XeTeXinterchartoks \dashClass 255 = {\,}
-\XeTeXinterchartoks 255 \dashClass = {\,}
+\XeTeXinterchartoks \dashClass 0 = \discretionary{}{}{\,}
+\XeTeXinterchartoks 0 \dashClass = \discretionary{}{}{\,}
+\XeTeXinterchartoks \dashClass 255 = \discretionary{}{}{\,}
+\XeTeXinterchartoks 255 \dashClass = \discretionary{}{}{\,}
 
 %
 % Style definitions and hacks
@@ -228,14 +233,13 @@
 % Macros to format certain words and abbreviations automatically
 \newcommand*{\AM}{{\scshape am}\xspace} % AM in small caps, for time of day
 \newcommand*{\PM}{{\scshape pm}\xspace} % PM in small caps, for time of day
-\newcommand*{\SPHEW}{{\scshape sphew}\xspace} % All small caps SPHEW
 %
 % Makes a written note in italics (first used, Hogwarts acceptance letter)
 \newenvironment{writtenNote}{%\parindent=1cm%
 	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
-	\begin{adjustwidth}{\parindent}{\parindent}%
-	\par\noindent\itshape}
-	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+	\begin{adjustwidth}{\parindent}{\parindent}\begin{em}%
+	\par\noindent}
+	{\end{em}\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
 % Makes a letter address and closing, for use with above writtenNote environment
 \newcommand{\letterAddress}[1]{\pagebreak[1]\noindent{}#1\nopagebreak[4]\par}
 \newcommand{\letterClosing}[2][\vskip 1\baselineskip]{\nopagebreak[4]#1\par\nopagebreak[5]\noindent#2}
