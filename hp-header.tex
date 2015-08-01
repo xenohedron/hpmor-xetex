@@ -31,7 +31,7 @@
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{\topskip + 36\baselineskip}{4.7in}{*}
+\settypeblocksize{7.2in}{4.7in}{*}
 \setlrmargins{*}{*}{0.8}
 \setulmargins{*}{*}{0.8}
 \setheadfoot{\topskip + \baselineskip}{2\baselineskip}
@@ -113,7 +113,7 @@
 %
 % Subsection
 %
-\setsubsecheadstyle{\bfshape\scshape} % Subsection titles in small caps
+\setsubsecheadstyle{\bfseries\scshape} % Subsection titles in small caps
 \beforesubsecskip=1.5\baselineskip % skip before the heading
 \aftersubsecskip=.5\baselineskip plus .5\baselineskip % skip after the heading
 \setsubsechook{\nopagebreak\vskip 0pt plus 3\baselineskip}
@@ -121,18 +121,21 @@
 %
 % Configure line spacing and paragraph spacing, and modifying penalties
 %
-\linespread{1.16} % Wider line spacing looks much better
+\linespread{1.17} % Wider line spacing looks much better
 \raggedbottom     % Better to have consistent line spacing than vertically justified text
+%\sloppybottom     % Allows widow lines to be added to the bottom of the page.
 \frenchspacing    % Single space after a period
 %
 \setlength{\emergencystretch}{.07\textwidth}
 % If a paragraph cannot be typeset without compromises, try wider line spacing
 %
-\clubpenalty=80 % Last line of page new paragraph = not much of an issue
+\clubpenalty=80 % Mildly discourages first line of paragraph on previous page
 \widowpenalty=4000 % Avoids last line of paragraph on next page
-\brokenpenalty=7000 % Avoids hyphenation across a page break
+\brokenpenalty=9000 % Avoids hyphenation across a page break
+\hyphenpenalty=70 % Penalty for automatic hyphenation
+\exhyphenpenalty=90 % Penalty for breaking after a dash or explicit hyphen
 \doublehyphendemerits=90000 % Avoids hyphenation on consecutive lines
-\hbadness=2000 % When compiling, only reports underfull lines if badness>2000
+\hbadness=4000 % When compiling, only reports underfull lines if badness>4000
 
 %
 % Adjust space around lists (not entirely sure why)
@@ -211,18 +214,18 @@
 %
 \XeTeXinterchartokenstate = 1 % enable functionality
 %
-% Automatic spacing around em dashes
-\XeTeXinterchartoks \dashClass 0 = \discretionary{}{}{\,}
-\XeTeXinterchartoks 0 \dashClass = \discretionary{}{}{\,}
-\XeTeXinterchartoks \dashClass 255 = \discretionary{}{}{\,}
-\XeTeXinterchartoks 255 \dashClass = \discretionary{}{}{\,}
+% Automatic spacing around em dashes, allows line breaks after
+\XeTeXinterchartoks \dashClass 0 = {\discretionary{}{}{\,}}
+\XeTeXinterchartoks 0 \dashClass = {\,}
+\XeTeXinterchartoks \dashClass 255 = {\discretionary{}{}{\,}}
+\XeTeXinterchartoks 255 \dashClass = {\,}
 
 %
 % Style definitions and hacks
 %
 % In the text, em dashes are encoded explicitly
 % and the ellipsis is encoded with {\el}
-\newcommand*{\el}{\textellipsis} % Ellipsis definition
+\newcommand*{\el}{\,.\,.\,.} % Ellipsis definition
 %
 % Logical formatting macros
 \newcommand*{\parsel}[1]{\textit{#1}} % Parseltongue
@@ -236,19 +239,19 @@
 %
 % Makes a written note in italics (first used, Hogwarts acceptance letter)
 \newenvironment{writtenNote}{%\parindent=1cm%
-	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
+	\vskip 1\baselineskip plus 1\baselineskip minus .5\baselineskip%
 	\begin{adjustwidth}{\parindent}{\parindent}\begin{em}%
 	\par\noindent}
-	{\end{em}\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+	{\end{em}\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus .5\baselineskip}
 % Makes a letter address and closing, for use with above writtenNote environment
 \newcommand{\letterAddress}[1]{\pagebreak[1]\noindent{}#1\nopagebreak[4]\par}
 \newcommand{\letterClosing}[2][\vskip 1\baselineskip]{\nopagebreak[4]#1\par\nopagebreak[5]\noindent#2}
 %
 % Makes an inscription in small caps (first used, Gringotts)
 \newenvironment{inscription}{%\parindent=1cm%
-	\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip%
+	\vskip 1\baselineskip plus .5\baselineskip minus .5\baselineskip%
 	\begin{adjustwidth}{4\parindent}{\parindent}\scshape}
-	{\end{adjustwidth}\vskip 1\baselineskip plus 1\baselineskip minus 1\baselineskip}
+	{\end{adjustwidth}\vskip 1\baselineskip plus .5\baselineskip minus .5\baselineskip}
 %
 % Not sure what these are included for:
 \fboxrule=1pt
@@ -268,5 +271,6 @@
 %
 \hyphenation{Her-mi-o-ne Gran-ger bru-shes Gryf-fin-dor Le-strange 
 some-where which-ev-er Hog-warts re-pli-cat-ed ran-dom sta-tis-ti-cal 
-Wi-zen-gam-ot an-aly-se an-aly-sis remem-ber McGon-a-gall fun-da-men-tal}
+Wi-zen-gam-ot an-aly-se an-aly-sis re-mem-ber McGon-a-gall fun-da-men-tal
+Dum-ble-dore thou-sand}
 
