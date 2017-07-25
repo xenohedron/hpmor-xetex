@@ -23,7 +23,7 @@
 \usepackage[autostyle=false, style=english]{csquotes}
 \MakeOuterQuote{"}	        % Automatic curly quotes
 
-\usepackage{ucntn}          % Provides \NUMTONAME for all caps output
+\usepackage{fmtcount}       % Provides \NUMBERstringnum
 \usepackage{graphicx}       % for \reflectbox in header
 
 \input{ushyphex}            % US Hyphenation exceptions
@@ -79,7 +79,7 @@
 \newcommand{\lbreak}{\vspace*{\baselineskip}}
 
 %
-% Custom chapter style: confusing
+% Custom chapter style
 %
 \makechapterstyle{evans}{%
 	\renewcommand*{\chapnamefont}{\hpchap\normalsize}
@@ -91,16 +91,16 @@
 	\setlength{\afterchapskip}{1\baselineskip}
 	
 	\renewcommand*{\printchapternum}{% " C H A P T E R   O N E "
-		\begin{center} \chapnumfont \hyperref[contents]{CHAPTER \NUMTONAME{\thechapter}\end{center}}}
+		\begin{center} \chapnumfont \hyperref[contents]{CHAPTER \NUMBERstringnum{\thechapter}}\end{center}}
 
 	\renewcommand*{\printchaptername}{}% Not needed, "CHAPTER" added above
 	
 	\renewcommand*{\printchaptertitle}[1]{% "A DAY OF VERY LOW PROBABILITY"
 		\vskip 1cm \begin{center}\chaptitlefont \MakeUppercase{##1}\end{center}\par \vskip 1cm}
 	
-	\renewcommand*{\chaptermark}[1]{% Don't know what this affects
+	\renewcommand*{\chaptermark}[1]{% "CHAPTER ONE" and "A DAY OF..."
 		\markboth{\MakeUppercase{##1}}{%
-		  \MakeUppercase{\chaptername}~\NUMTONAME{\thechapter}}}
+		  \MakeUppercase{\chaptername}~\protect\NUMBERstringnum{\thechapter}}}
 
 	\renewcommand*{\tocmark}{\markboth{}{\MakeUppercase{Contents}}}
 	
