@@ -1,4 +1,4 @@
-\documentclass[11pt,extrafontsizes,twoside,openany,final]{memoir}
+\documentclass[10pt,extrafontsizes,twoside,openany,final]{memoir}
 
 % THIS DOCUMENT REQUIRES XeLaTeX TO COMPILE!
 
@@ -26,13 +26,15 @@
 \usepackage{ucntn}          % Provides \NUMTONAME for all caps output
 \usepackage{graphicx}       % for \reflectbox in header
 
+\input{ushyphex}            % US Hyphenation exceptions
+
 %
 % Set-up page sizes and margins
 %
 \setstocksize{9in}{6in}
 \settrimmedsize{\stockheight}{\stockwidth}{*}
-\settypeblocksize{7.2in}{4.7in}{*}
-\setlrmargins{*}{*}{0.8}
+\settypeblocksize{7.34in}{4.31in}{*}
+\setlrmargins{*}{*}{0.65}
 \setulmargins{*}{*}{0.8}
 \setheadfoot{\topskip + \baselineskip}{2\baselineskip}
 \checkandfixthelayout[fixed]
@@ -62,14 +64,19 @@
 \newcommand*{\Star}{{\starfont{}*}}
 %
 % Draws three “magic stars”, used as a decoration everywhere
-\newcommand*{\Stars}{{\large\Star\kern-.6ex\lower1.3ex\hbox{\large\Star}%
-    \kern-.1ex\raise.2ex\hbox{\tiny\Star}\spacefactor1000}}
+\newcommand*{\Stars}{{\Large\Star\kern-.6ex\lower1.1ex\hbox{\Large\Star}%
+    \kern-.1ex\raise.1ex\hbox{\small\Star}\spacefactor1000}}
 
 %
 % Section break with three spaced stars
 %
 \newcommand{\sbreak}{\par\vskip 0pt plus .5\baselineskip%
     {\begin{center} \Star\qquad\Star\qquad\Star \end{center}}\vskip 0pt plus .5\baselineskip \par\noindent}
+
+%
+% Simple linebreak
+%
+\newcommand{\lbreak}{\vspace*{\baselineskip}}
 
 %
 % Custom chapter style: confusing
@@ -123,18 +130,19 @@
 %
 \linespread{1.17} % Wider line spacing looks much better
 \raggedbottom     % Better to have consistent line spacing than vertically justified text
-%\sloppybottom     % Allows widow lines to be added to the bottom of the page.
+% \sloppybottom     % Allows widow lines to be added to the bottom of the page.
 \frenchspacing    % Single space after a period
 %
 \setlength{\emergencystretch}{.07\textwidth}
 % If a paragraph cannot be typeset without compromises, try wider line spacing
 %
 \clubpenalty=80 % Mildly discourages first line of paragraph on previous page
-\widowpenalty=4000 % Avoids last line of paragraph on next page
-\brokenpenalty=9000 % Avoids hyphenation across a page break
-\hyphenpenalty=70 % Penalty for automatic hyphenation
-\exhyphenpenalty=90 % Penalty for breaking after a dash or explicit hyphen
-\doublehyphendemerits=90000 % Avoids hyphenation on consecutive lines
+\widowpenalty=9000 % Avoids last line of paragraph on next page
+\brokenpenalty=2000 % Avoids hyphenation across a page break
+\hyphenpenalty=60 % Penalty for automatic hyphenation
+\exhyphenpenalty=75 % Penalty for breaking after a dash or explicit hyphen
+\adjdemerits=80000 % Penalty for visually incompatible lines
+\doublehyphendemerits=70000 % Avoids hyphenation on consecutive lines
 \hbadness=4000 % When compiling, only reports underfull lines if badness>4000
 
 %
@@ -158,7 +166,7 @@
 %
 % Page numbering, footer, header (confusing)
 %
-\newcommand{\pageInFooter}{{\footnotesize\Star\ \makebox[2em][c]{\thepage\,}\Star}}
+\newcommand{\pageInFooter}{{\small\Star\ \makebox[2em][c]{\thepage\,}\Star}}
 % Page number centered between two small stars in footer
 % Same on all pages in body text
 \makeevenfoot{plain}{}{\pageInFooter}{}
@@ -257,20 +265,13 @@
 \fboxrule=1pt
 \fboxsep=-1pt
 %
-% Whiteboard in chapter 15 "Transfiguration is not permanent!"
-\newcommand{\hackChXV}[1]{
-\vskip 0pt plus .5cm
-\begin{center}
-\underline{\textbf{\MakeUppercase{#1}}}
-\end{center}
-\vskip 0pt plus .5cm
-}
 %
 %
 % Hyphenation corrections
 %
-\hyphenation{Her-mi-o-ne Gran-ger bru-shes Gryf-fin-dor Le-strange 
-some-where which-ev-er Hog-warts re-pli-cat-ed ran-dom sta-tis-ti-cal 
-Wi-zen-gam-ot an-aly-se an-aly-sis re-mem-ber McGon-a-gall fun-da-men-tal
-Dum-ble-dore thou-sand}
-
+\hyphenation{Gryf-fin-dor Huf-fle-puff Sly-the-rin Wi-zen-ga-mot
+McGon-a-gall Dum-ble-dore Malfoy Potter Her-mione Flit-wick
+Vol-de-mort Le-strange Gil-deroy Scour-gify
+Alo-ho-mora Mun-dun-gus Hogs-meade Nym-pha-dora
+Ver-i-ta-serum Tre-lawney Az-ka-ban Poly-juice Sirius basi-lisk
+Phi-neas McKin-non Filius Quiri-nus Love-good whom-ever}
